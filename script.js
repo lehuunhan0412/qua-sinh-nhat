@@ -11,7 +11,7 @@ const PHOTO_LIST = [
     "Messenger_creation_845FE778-AABA-46F9-A7C6-207CF68A2DDE.jpeg"
 ];
 
-const WISH_MESSAGE = "Em ơi,\n\nChúc mừng sinh nhật tuổi 16 rực rỡ nhất của công chúa anh thương! 🎂✨\n\nBước sang tuổi mới, chúc em luôn xinh đẹp, ngập tràn niềm vui, tiếng cười và hạnh phúc. Cảm ơn em vì đã đến bên anh và làm cho thế giới của anh trở nên dịu dàng, ấm áp hơn biết bao.\n\nMọi điều ước tuổi 16 của em nhất định sẽ thành hiện thực nhé!";
+const WISH_MESSAGE = "Em ơi,\n\nChúc mừng sinh nhật tuổi 16 rực rỡ nhất của công chúa anh thương! 🎂✨\n\nBước sang tuổi 17, chúc em luôn xinh đẹp, ngập tràn niềm vui, tiếng cười và hạnh phúc. Cảm ơn em vì đã đến bên anh và làm cho thế giới của anh trở nên dịu dàng, ấm áp hơn biết bao.\n\nMọi điều ước tuổi mới của em nhất định sẽ thành hiện thực nhé!";
 
 let currentPin = "";
 let charIndex = 0;
