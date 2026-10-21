@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Món Quà Sinh Nhật Tuổi 16 Dành Cho Công Chúa 🎂❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Nhạc nền tự động lấy file nhạc trong thư mục Test -->
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="nhac.mp3" type="audio/mpeg">
+        <source src="nhac.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Nút bật/tắt nhạc góc trên -->
+    <button class="music-toggle" id="musicBtn" onclick="toggleMusic()">🎵 Đang phát nhạc</button>
+
+    <!-- Canvas hiệu ứng pháo hoa nhẹ nhàng ở màn hình hộp quà -->
+    <canvas id="fireworks"></canvas>
+
+    <!-- Lớp chứa các tấm ảnh nhỏ rơi nhẹ nhàng xung quanh bánh kem -->
+    <div id="fallingPhotosContainer"></div>
+
+    <!-- =====================================================
+         TRANG 1: MÀN HÌNH NHẬP MẬT KHẨU + NÚT BÓNG ĐÈN VÉ CÀO
+         ===================================================== -->
+    <div class="screen active" id="lockScreen">
+        <button class="bulb-btn" onclick="openScratchModal()" title="Gợi ý mật khẩu">
+            💡<span>Lấy mã</span>
+        </button>
+
+        <div class="lock-avatar">
+            <img src="grok_1790529366969.jpg" alt="Avatar" onerror="this.src='avatar.jpg'">
+        </div>
+        <h2 class="lock-title">Mật Khẩu Sinh Nhật 🔒</h2>
+        <p class="lock-hint" id="lockHint">Nhập ngày sinh nhật của em (Quên thì ấn bóng đèn 💡 góc trên nhé!)</p>
+
+        <div class="pin-dots" id="pinDots">
+            <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="keypad">
+            <button onclick="pressKey('1')">1</button>
+            <button onclick="pressKey('2')">2</button>
+            <button onclick="pressKey('3')">3</button>
+            <button onclick="pressKey('4')">4</button>
+            <button onclick="pressKey('5')">5</button>
+            <button onclick="pressKey('6')">6</button>
+            <button onclick="pressKey('7')">7</button>
+            <button onclick="pressKey('8')">8</button>
+            <button onclick="pressKey('9')">9</button>
+            <button class="key-sub" onclick="clearPin()">Xoá</button>
+            <button onclick="pressKey('0')">0</button>
+            <button class="key-sub" onclick="deleteLast()">⌫</button>
+        </div>
+    </div>
+
+    <!-- POPUP VÉ CÀO TRÚNG THƯỞNG (Khi ấn vào bóng đèn 💡) -->
+    <div class="modal-overlay" id="ticketModal">
+        <div class="ticket-card">
+            <button class="close-modal" onclick="closeScratchModal()">✕</button>
+            <div class="ticket-header">🎫 VÉ CÀO TRÚNG THƯỞNG 🎫</div>
+            <p class="ticket-desc">Dùng ngón tay cào lớp nhũ bạc bên dưới để tìm mật khẩu mở quà nhé!</p>
+
+            <div class="scratch-box">
+                <div class="secret-code-under" id="ticketSecretText">🎂 2010 🎂</div>
+                <canvas id="scratchCanvas" width="250" height="90"></canvas>
+            </div>
+
+            <p class="ticket-footer">✨ Chúc công chúa của anh trúng giải đặc biệt! ✨</p>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         TRANG 2: BÁNH KEM NẾN SỐ 17 & HIỆU ỨNG GIÓ THỔI NẾN
+         ===================================================== -->
+    <div class="screen" id="cakeScreen">
+        <h2 class="stage-title">Tuổi 16 Thật Đẹp Nhé! ✨</h2>
+        <p class="stage-sub">Hãy nhắm mắt ước một điều thật đẹp rồi ấn nút thổi tắt nến bên dưới nha!</p>
+
+        <div class="cake-stage">
+            <!-- Hiệu ứng làn gió thổi ngang qua nến -->
+            <div class="wind-effect" id="windEffect">
+                <span class="wind-icon">🌬️</span>
+                <div class="wind-lines">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- Cặp nến số 17 trên đỉnh bánh -->
+            <div class="candle-17">
+                <div class="candle-glow" id="candleGlow"></div>
+                <div class="digit-candle">
+                    <div class="flame" id="flame1"></div>
+                    <div class="smoke" id="smoke1">💨</div>
+                    <span class="num-17">1</span>
+                </div>
+                <div class="digit-candle">
+                    <div class="flame" id="flame2"></div>
+                    <div class="smoke" id="smoke2">💨</div>
+                    <span class="num-17">6</span>
+                </div>
+            </div>
+
+            <!-- Bánh kem 2 tầng -->
+            <div class="cake-art">
+                <div class="cake-top-tier">
+                    <div class="icing-drip"></div>
+                    <div class="strawberries">🍓 🍓 🍓</div>
+                </div>
+                <div class="cake-bottom-tier">
+                    <div class="icing-drip"></div>
+                    <div class="cake-ribbon">Happy 16th Birthday</div>
+                </div>
+                <div class="cake-plate"></div>
+            </div>
+        </div>
+
+        <button class="btn-blow" id="blowBtn" onclick="blowOutCandle17()">
+            🌬️ Thổi Tắt Nến
+        </button>
+    </div>
+
+    <!-- =====================================================
+         POPUP THÔNG BÁO "BẠN CÓ QUÀ" (CÓ & KHÔNG LÀM NŨNG)
+         ===================================================== -->
+    <div class="modal-overlay" id="giftPromptModal">
+        <div class="prompt-card" id="promptCard">
+            <div class="prompt-icon" id="promptEmoji">🎁🥰</div>
+            <h3 class="prompt-title">Ting ting! Bạn có quà nè! 🎉</h3>
+            <p class="prompt-text" id="poutText">
+                Nến đã thổi xong rồi! Anh có chuẩn bị một hộp quà bí mật dành riêng cho công chúa, em có muốn mở quà không? 👉👈
+            </p>
+            <div class="prompt-actions">
+                <button class="btn-yes" id="btnYes" onclick="acceptGift()">Có chứ 💖</button>
+                <button class="btn-no" id="btnNo" onclick="rejectGift()">Không 😝</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         TRANG 3: HỘP QUÀ RƠI MỞ NẮP -> TUNG ẢNH -> PHONG BÌ -> THƯ
+         ===================================================== -->
+    <div class="gift-scene" id="giftScene">
+        <!-- Lời nhắc phía trên hộp quà -->
+        <div class="gift-instruction" id="giftHint">
+            ✨ Chạm vào hộp quà để mở nhé! ✨
+        </div>
+
+        <!-- Khu vực chứa các tấm ảnh bay ra từ trong hộp quà -->
+        <div id="ejectedPhotosArea"></div>
+
+        <!-- Hộp quà đỏ nơ vàng (Giống ảnh 1 & 2) -->
+        <div class="gift-box-wrapper" id="giftBoxWrapper" onclick="openGiftBox()">
+            <!-- Nắp hộp + Nơ vàng -->
+            <div class="gift-lid" id="giftLid">
+                <div class="gift-bow">
+                    <div class="bow-left"></div>
+                    <div class="bow-right"></div>
+                    <div class="bow-center"></div>
+                </div>
+                <div class="lid-ribbon"></div>
+            </div>
+            <!-- Thân hộp -->
+            <div class="gift-body">
+                <div class="body-ribbon"></div>
+            </div>
+        </div>
+
+        <!-- Tấm thiệp phong bì ở giữa màn hình sau khi hết ảnh (Giống ảnh 3) -->
+        <div class="floating-envelope" id="floatingEnvelope" onclick="openFinalLetter()">
+            <div class="envelope-flap"></div>
+            <div class="envelope-pocket"></div>
+            <div class="envelope-heart">❤️</div>
+            <p class="envelope-tap-text">Chạm vào thiệp để đọc lời chúc 💌</p>
+        </div>
+
+        <!-- Tờ thư lời chúc hiện ra giữa màn hình (Giống ảnh 4) -->
+        <div class="final-letter-card" id="finalLetterCard">
+            <div class="letter-top-hearts">♥ &nbsp; ♥ &nbsp; ♥</div>
+            <h2 class="letter-greeting">Chúc mừng sinh nhật<br>công chúa của anh! 👑</h2>
+            <div class="letter-content" id="typewriterText"></div>
+            <div class="letter-sign" id="signatureText">— Yêu em rất nhiều ❤️</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
